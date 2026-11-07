@@ -18,6 +18,13 @@ bash nvim-update.sh
 rm nvim-update.sh
 sudo npm install -g neovim
 
+sudo apt install -y pipewire wireplumber pavucontrol pamixer \
+    vifm mpv cmus alacritty gimp zathura zathura-pdf-poppler \
+    firefox-esr
+
+sudo apt install -y gdisk exfatprogs
+sudo mkdir -p /mnt/usb
+
 rm -rf "$HOME/.oh-my-zsh"
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
@@ -90,11 +97,46 @@ ja() {
     echo "No JAR file found."
 }
 
+pdf() {
+    if [ "$#" -ne 1 ]; then
+        echo "Usage: pdf <file.pdf>"
+        return 1
+    fi
+
+    if [[ ! "$1" =~ \.pdf$ ]]; then
+        echo "Not a pdf file."
+        return 1
+    fi
+
+    (zathura "$1" &)
+}
+
 # Syntax Highlighting
 source ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 EOF
 
 sudo chsh -s "$(which zsh)" "$USER"
+
+mkdir -p "$HOME/.config/cmus"
+cat >"$HOME/.config/cmus/rc" <<'EOF'
+clear
+add ~/Music/
+EOF
+
+cat >"$HOME/.clang-format" <<'EOF'
+Language: C
+BasedOnStyle: LLVM
+
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+
+ColumnLimit: 0
+EOF
+
+cat >"$HOME/.gdbinit" <<'EOF'
+set debuginfod enabled on
+EOF
 
 rm -rf "$HOME"/.local/share/nvim/lazy
 mkdir -p "$HOME"/.local/share/nvim/lazy
