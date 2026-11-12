@@ -8,7 +8,7 @@ sudo apt install -y build-essential fastfetch less feh man-db manpages \
     tree xclip git git-filter-repo zsh curl wget fonts-powerline ripgrep fd-find \
     bc procps coreutils gawk sed grep xss-lock dunst libnotify-bin \
     gcc clang make bear gdb valgrind \
-    openjdk-25-jdk maven gradle \
+    openjdk-25-jdk \
     lua5.1 luarocks \
     python3 python3-pip python3-pynvim python3-venv \
     nodejs npm \
@@ -18,6 +18,12 @@ sudo apt remove -y neovim
 bash nvim-update.sh
 rm nvim-update.sh
 sudo npm install -g neovim
+
+bash gradle-update.sh
+rm gradle-update.sh
+
+bash maven-update.sh
+rm maven-update.sh
 
 sudo apt install -y pipewire wireplumber pavucontrol pamixer \
     vifm mpv cmus alacritty gimp zathura zathura-pdf-poppler \
